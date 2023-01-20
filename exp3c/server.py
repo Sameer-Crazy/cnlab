@@ -1,0 +1,16 @@
+import socket
+s = socket.socket()
+s.bind(('127.0.0.1',12345))
+s.listen()
+print("Server is listening....")
+c,addr = s.accept()
+print("Got a connection from ",addr)
+filename = c.recv(1024).decode()
+file = open(filename,'rb')
+data = file.read()
+while data:
+    c.send(data)
+    data = file.read()
+print("File Transferred Successfully!!")
+c.close()
+s.close()
